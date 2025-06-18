@@ -1,59 +1,81 @@
-# 🚀 CI/CD Pipeline for Static Website Deployment using GitHub Actions
+# 🛠️ DevOps Projects Portfolio
 
-This project demonstrates how to set up a **CI/CD pipeline** to automatically deploy a static website to **GitHub Pages** using **GitHub Actions**.
-
-## 📌 Project Overview
-
-Every time a change is pushed to the `main` branch, the GitHub Actions workflow is triggered. It checks out the code, uploads the static site as an artifact, and deploys it directly to GitHub Pages — without any manual intervention.
-
-This setup follows DevOps best practices for automation, speed, and consistency.
+Welcome to my DevOps project portfolio! This monorepo contains hands-on projects that demonstrate my practical knowledge in DevOps tools, automation, CI/CD pipelines, cloud infrastructure, and compliance auditing.
 
 ---
 
-## 🧑‍💻 Technologies Used
+## 📁 Included Projects
 
-- **GitHub Actions** – For automating deployment on every code push
-- **GitHub Pages** – To host the static website
-- **YAML** – For defining CI/CD workflow
-- **Git** – For version control and deployment triggers
-- **Bash (optional)** – For scripting automation steps
+# 🚀 CI/CD Pipeline for Static Website Deployment
+
+This project demonstrates how to set up a CI/CD pipeline using **GitHub Actions** to automatically deploy a static website to **GitHub Pages**.
+
+## 🔧 Key Features
+
+- Automated deployment triggered on push to `main` branch  
+- Uses GitHub Actions for checkout, artifact handling, and deployment  
+- Zero manual deployment steps – fully automated
+
+## 🛠️ Technologies Used
+
+- **GitHub Actions** – Workflow automation  
+- **GitHub Pages** – Static site hosting  
+- **YAML** – CI/CD pipeline configuration
+
+## ⚙️ Workflow Summary
+
+- Checkout the code
+- Setup GitHub Pages environment
+- Upload static files as an artifact
+- Deploy to GitHub Pages automatically
+
 
 ---
 
-## ⚙️ CI/CD Workflow Explained
+# 🛡️ ShellSentinel: GitHub Access Audit & Compliance Automation
 
-The `.github/workflows/deploy.yml` file contains the deployment workflow:
+This project demonstrates how to automate GitHub collaborator audits and enforce access compliance using **Shell Scripting** on an **Ubuntu EC2 instance** as part of the *DevOps Learning Path by Abhishek Veeramalla*.
 
-```yaml
-on:
-  push:
-    branches:
-      - main
+## 🔍 Key Features
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+- Audits GitHub repo collaborators and compares with a secure whitelist  
+- Detects unauthorized users and logs detailed reports  
+- Sends manual email alerts via Postfix & Gmail SMTP  
+- Scheduled daily execution using Cron on Ubuntu server
 
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+## 🛠️ Technologies Used
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+- **Bash Shell Scripting** – Core logic and automation  
+- **GitHub API** – Accessing collaborator and permission data  
+- **Postfix + Gmail SMTP** – Email notifications  
+- **Cron** – Task scheduling  
+- **Ubuntu (EC2)** – Execution environment
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "."
+## ⚙️ Workflow Summary
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+- Fetch current collaborators using GitHub API  
+- Compare against a predefined whitelist  
+- Log mismatches or unauthorized access  
+- Send alerts via configured mail system  
+- Run the script automatically every day via Cron
+
+---
+
+## 🙋‍♂️ Author
+
+**Mantena Jaya Rakesh Varma**  
+👨‍💻 DevOps & Cloud Engineer  
+🔗 [GitHub Profile](https://github.com/Varma1819)
+
+---
+
+## 📌 Future Plans
+
+- Dockerize the audit tool for container-based deployment  
+- Add Kubernetes project (cluster setup + monitoring)  
+- Implement centralized logging with ELK or Loki stack
+
+---
+
+> ⭐ If you find these projects helpful or interesting, feel free to star the repo or connect!
 
