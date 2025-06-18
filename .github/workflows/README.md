@@ -4,7 +4,7 @@ This project demonstrates how to set up a **CI/CD pipeline** to automatically de
 
 ## 📌 Project Overview
 
-Every time a change is pushed to the `main` branch, the GitHub Actions workflow is triggered. It checks out the code, uploads the static site as an artifact, and deploys it directly to GitHub Pages — without any manual intervention.
+Every time a change is pushed to the `main` branch, the GitHub Actions workflow is triggered. It checks out the code, uploads the static site as an artefact, and deploys it directly to GitHub Pages — without any manual intervention.
 
 This setup follows DevOps best practices for automation, speed, and consistency.
 
