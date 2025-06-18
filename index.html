@@ -1,10 +1,784 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CI/CD with GitHub Actions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARMA MOTORS - Used Car Sales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        #search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Filters Section */
+        .filters {
+            width: 300px;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .clear-filters-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .single-slider {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .apply-filters-btn {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Car Listings */
+        .car-listings {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .listings-header {
+            margin-bottom: 2rem;
+        }
+
+        .sort-options {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .car-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .car-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-image {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-details h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .car-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 1rem;
+        }
+
+        .load-more-container {
+            text-align: center;
+        }
+
+        .load-more-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-modal-content {
+            max-width: 400px;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .contact-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .contact-section h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            list-style: none;
+        }
+
+        .social-links li {
+            margin: 0.5rem 0;
+        }
+
+        .social-links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-summary {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #667eea;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            main {
+                flex-direction: column;
+            }
+
+            .filters {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #dee2e6;
+            }
+
+            .car-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello from GitHub Actions!</h1>
-    <p>This website was automatically deployed using GitHub Actions.</p>
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-image">VM</div>
+            <div class="logo">VARMA MOTORS</div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search your car">
+            <span id="search-icon">🔍</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">HOME</a></li>
+                <li><a href="#" id="about-us-link">ABOUT US</a></li>
+                <li><a href="#" id="login-signup-link">LOGIN/SIGNUP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Filter Section (Left Column) -->
+        <aside class="filters">
+            <div class="filters-header">
+                <h2>Filters:</h2>
+                <button type="button" class="clear-filters-btn">Clear Filters</button>
+            </div>
+            
+            <!-- Price Filter -->
+            <div class="filter-group">
+                <label for="price-slider">Max Price: <span id="price-value">Up to ₹10,000,000</span></label>
+                <div class="single-slider">
+                    <input type="range" id="price-slider" min="1000000" max="10000000" value="10000000" class="slider-input">
+                </div>
+                 <div class="range-values">
+                    <span>₹10 Lakh</span>
+                    <span>₹1 Crore</span>
+                </div>
+            </div>
+            
+            <!-- Km Driven Filter -->
+            <div class="filter-group">
+                 <label for="km-slider">Max Km Driven: <span id="km-value">Up to 200,000 Km</span></label>
+                 <div class="single-slider">
+                    <input type="range" id="km-slider" min="0" max="200000" value="200000" class="slider-input">
+                 </div>
+                 <div class="range-values">
+                    <span>0 Km</span>
+                    <span>200,000 Km</span>
+                </div>
+            </div>
+            
+            <!-- Brand Filter -->
+            <div class="filter-group">
+                <label>Brand</label>
+                <select id="brand-select">
+                    <option value="" selected>Select Brand</option>
+                    <option>Maruti Suzuki</option>
+                    <option>Hyundai</option>
+                    <option>Tata</option>
+                    <option>Mahindra</option>
+                    <option>Toyota</option>
+                    <option>Honda</option>
+                    <option>Kia</option>
+                    <option>MG</option>
+                    <option>Volkswagen</option>
+                    <option>Skoda</option>
+                </select>
+            </div>
+            
+            <!-- Model Filter -->
+            <div class="filter-group">
+                <label>Model</label>
+                <select id="model-select">
+                    <option value="" selected>Select Model</option>
+                    <option>Swift ZXI</option>
+                    <option>Baleno Alpha</option>
+                    <option>Creta SX(O)</option>
+                    <option>Venue SX</option>
+                    <option>Nexon XZ+</option>
+                    <option>Harrier XZ+</option>
+                    <option>XUV700 AX7</option>
+                    <option>Scorpio S11</option>
+                    <option>Fortuner</option>
+                    <option>City ZX</option>
+                    <option>Seltos GTX</option>
+                    <option>Hector Sharp</option>
+                    <option>Taigun Topline</option>
+                    <option>Kushaq Style</option>
+                </select>
+            </div>
+
+            <!-- Apply Filters Button -->
+            <div class="filter-group">
+                 <button type="button" class="apply-filters-btn">Apply Filters</button>
+            </div>
+        </aside>
+
+        <!-- Car Listings Section (Right Column) -->
+        <section class="car-listings">
+            <div class="listings-header">
+                <select class="sort-options">
+                    <option>Sort</option>
+                    <option>Price - H to L</option>
+                    <option>Price - L to H</option>
+                    <option>Km - Low First</option>
+                </select>
+            </div>
+
+            <div class="car-cards">
+                <!-- Car Card 1 -->
+                <div class="car-card">
+                    <div class="car-image">
+                        Mahindra XUV700
+                    </div>
+                    <div class="car-details">
+                        <h3>Mahindra XUV700 AX7 (2022)</h3>
+                        <p><strong>Km Driven:</strong> 15,000 km</p>
+                        <p><strong>Condition:</strong> Excellent</p>
+                        <p><strong>Verified:</strong> Yes</p>
+                        <p class="price">₹22,50,000</p>
+                    </div>
+                </div>
+                
+                <!-- Car Card 2 -->
+                <div class="car-card">
+                    <div class="car-image">
+                        Hyundai Creta
+                    </div>
+                    <div class="car-details">
+                        <h3>Hyundai Creta SX(O) (2021)</h3>
+                        <p><strong>Km Driven:</strong> 30,000 km</p>
+                        <p><strong>Condition:</strong> Good</p>
+                        <p><strong>Verified:</strong> Yes</p>
+                        <p class="price">₹16,80,000</p>
+                    </div>
+                </div>
+                
+                <!-- Car Card 3 -->
+                <div class="car-card">
+                    <div class="car-image">
+                        Tata Nexon
+                    </div>
+                    <div class="car-details">
+                        <h3>Tata Nexon XZ+ (2023)</h3>
+                        <p><strong>Km Driven:</strong> 8,000 km</p>
+                        <p><strong>Condition:</strong> Excellent</p>
+                        <p><strong>Verified:</strong> Yes</p>
+                        <p class="price">₹13,10,000</p>
+                    </div>
+                </div>
+                
+                <!-- Car Card 4 -->
+                <div class="car-card">
+                    <div class="car-image">
+                        Maruti Swift
+                    </div>
+                    <div class="car-details">
+                        <h3>Maruti Suzuki Swift ZXI (2022)</h3>
+                        <p><strong>Km Driven:</strong> 22,000 km</p>
+                        <p><strong>Condition:</strong> Good</p>
+                        <p><strong>Verified:</strong> Yes</p>
+                        <p class="price">₹7,90,000</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button type="button" class="load-more-btn">Load More</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- About Us Modal Structure (Hidden by default) -->
+    <div id="about-us-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            
+            <h2>Varma Motors – Wheels You Trust</h2>
+
+            <p>
+                Established by Rakesh Varma M, Varma Motors has been a trusted name in the pre-owned car market for
+                over two decades. With a rapidly growing network of 20+ branches across Andhra Pradesh and
+                Telangana, we specialize in delivering quality-checked, value-driven, and reliable vehicles to thousands
+                of happy customers.
+            </p>
+            <p>
+                At Varma Motors, it's not just about selling cars – it's about earning your trust. Every vehicle we offer
+                undergoes a multi-point inspection, ensuring top-notch quality and peace of mind. Our commitment to
+                transparent pricing, personalized support, and exceptional after-sales service sets us apart in the
+                industry.
+            </p>
+            <p>
+                Whether you're in a city or a small town, finding "Wheels You Trust" has never been easier.
+            </p>
+
+            <div class="contact-section">
+                <h4>📍 Main Branch Address:</h4>
+                <p>Near Bus Stand, Bhimavaram, West Godavari District, Andhra Pradesh – 534202</p>
+            </div>
+
+            <div class="contact-section">
+                <h4>📞 State-wise Enquiry Numbers:</h4>
+                <p>Andhra Pradesh: +91 91234 56789</p>
+                <p>Telangana: +91 9876543210</p>
+            </div>
+
+            <div class="contact-section">
+                 <h4>🔗 Follow Us Online:</h4>
+                 <ul class="social-links">
+                     <li>
+                         <span>Facebook:</span> <a href="#" target="_blank" rel="noopener noreferrer">facebook.com/varmamotors.apts</a>
+                     </li>
+                     <li>
+                         <span>Instagram:</span> <a href="#" target="_blank" rel="noopener noreferrer">instagram.com/varmamotors.official</a>
+                     </li>
+                     <li>
+                         <span>YouTube:</span> <a href="#" target="_blank" rel="noopener noreferrer">youtube.com/@varmamotors</a>
+                     </li>
+                 </ul>
+            </div>
+
+            <div class="footer-summary">
+                Varma Motors – 20+ Branches | 2 States | 1 Promise: Wheels You Trust
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Signup Modal Structure (Hidden by default) -->
+    <div id="login-signup-modal" class="modal-overlay">
+        <div class="modal-content login-modal-content">
+            <button class="modal-close-btn">&times;</button>
+            
+            <h2 class="login-title">Log In</h2>
+
+            <form action="#" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="login-name">Name:</label>
+                    <input type="text" id="login-name" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary new-user-btn">New User (SignUp)</button>
+                    <button type="submit" class="btn btn-primary continue-btn">Continue</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript for modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // About Us Modal
+            const aboutUsLink = document.getElementById('about-us-link');
+            const aboutUsModal = document.getElementById('about-us-modal');
+            const aboutUsCloseBtn = aboutUsModal.querySelector('.modal-close-btn');
+
+            aboutUsLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                aboutUsModal.style.display = 'block';
+            });
+
+            aboutUsCloseBtn.addEventListener('click', function() {
+                aboutUsModal.style.display = 'none';
+            });
+
+            // Login/Signup Modal
+            const loginSignupLink = document.getElementById('login-signup-link');
+            const loginSignupModal = document.getElementById('login-signup-modal');
+            const loginSignupCloseBtn = loginSignupModal.querySelector('.modal-close-btn');
+
+            loginSignupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginSignupModal.style.display = 'block';
+            });
+
+            loginSignupCloseBtn.addEventListener('click', function() {
+                loginSignupModal.style.display = 'none';
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === aboutUsModal) {
+                    aboutUsModal.style.display = 'none';
+                }
+                if (e.target === loginSignupModal) {
+                    loginSignupModal.style.display = 'none';
+                }
+            });
+
+            // Price slider functionality
+            const priceSlider = document.getElementById('price-slider');
+            const priceValue = document.getElementById('price-value');
+
+            priceSlider.addEventListener('input', function() {
+                const value = this.value;
+                if (value >= 10000000) {
+                    priceValue.textContent = 'Up to ₹1 Crore';
+                } else {
+                    priceValue.textContent = `Up to ₹${(value / 100000).toFixed(1)} Lakh`;
+                }
+            });
+
+            // Km slider functionality
+            const kmSlider = document.getElementById('km-slider');
+            const kmValue = document.getElementById('km-value');
+
+            kmSlider.addEventListener('input', function() {
+                const value = this.value;
+                kmValue.textContent = `Up to ${value.toLocaleString()} Km`;
+            });
+
+            // Clear filters functionality
+            const clearFiltersBtn = document.querySelector('.clear-filters-btn');
+            clearFiltersBtn.addEventListener('click', function() {
+                priceSlider.value = 10000000;
+                priceValue.textContent = 'Up to ₹1 Crore';
+                kmSlider.value = 200000;
+                kmValue.textContent = 'Up to 200,000 Km';
+                document.getElementById('brand-select').value = '';
+                document.getElementById('model-select').value = '';
+            });
+
+            // Apply filters functionality
+            const applyFiltersBtn = document.querySelector('.apply-filters-btn');
+            applyFiltersBtn.addEventListener('click', function() {
+                alert('Filters applied! (This is a demo - no actual filtering implemented)');
+            });
+
+            // Load more functionality
+            const loadMoreBtn = document.querySelector('.load-more-btn');
+            loadMoreBtn.addEventListener('click', function() {
+                alert('Load more functionality would be implemented here!');
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            const searchIcon = document.getElementById('search-icon');
+            
+            searchIcon.addEventListener('click', function() {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    alert(`Searching for: ${searchTerm}`);
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim();
+                    if (searchTerm) {
+                        alert(`Searching for: ${searchTerm}`);
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
