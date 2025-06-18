@@ -10,7 +10,7 @@
 Organizations often need to **track external/internal contributors** with repository access and ensure that **only approved users** have permissions like `read`, `write`, or `admin`. This tool automates that auditing process and sends a periodic report.
 
 ## Features
-
+ 
 * Fetches all collaborators using GitHub API (with permission levels).
 * Validates each user against a custom whitelist.
 * Flags unauthorized users.
