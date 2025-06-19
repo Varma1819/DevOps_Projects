@@ -61,6 +61,39 @@ This project demonstrates how to automate GitHub collaborator audits and enforce
 
 ---
 
+# ☸️ Running a Sample App on Kubernetes using Minikube
+
+This project demonstrates how to run a sample application on a local Kubernetes cluster using **Minikube**. It includes pod creation, deployment management, debugging, self-healing validation, and service exposure.
+
+## 🔧 Key Features
+
+- Local Kubernetes cluster with Minikube  
+- Create and manage deployments and pods  
+- Debug using logs and describe  
+- Observe self-healing when pods are deleted  
+- Expose services via port forwarding
+
+## 🛠️ Technologies Used
+
+- **Minikube** – Local Kubernetes cluster  
+- **Kubernetes (kubectl)** – Container orchestration  
+- **Docker** – Container runtime  
+- **Nginx** – Web server container for testing  
+- **YAML** *(optional)* – Configuration templates
+
+## ⚙️ Workflow Summary
+
+- Start Minikube cluster locally  
+- Create deployments using `kubectl`  
+- Edit and rollback deployment images  
+- View logs and events for debugging  
+- Delete pods to observe Kubernetes self-healing  
+- Expose the service using `kubectl port-forward`  
+- Clean up the deployment and services
+
+---
+
+
 ## 🙋‍♂️ Author
 
 **Mantena Jaya Rakesh Varma**  
